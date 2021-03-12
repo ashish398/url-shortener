@@ -1,13 +1,14 @@
 import React from 'react'
 import NewUrl from './NewUrl'
-import UrlLists from './UrlLists'
+import UrlFeed from './UrlLists'
 
 
 export default function home() {
     return (
         <div>
+            <UrlFeed/>
             <NewUrl/>
-            <UrlLists/>
+            <UrlFeed/>
         </div>
     )
 }

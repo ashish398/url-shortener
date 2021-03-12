@@ -1,48 +1,71 @@
-import React from 'react'
-import { gql, useMutation } from '@apollo/client';
+import React, { useState } from "react";
+import {
+  Container,
+  Form,
+  Modal,
+  Button
+} from "semantic-ui-react";
+import { useAddUrlMutation } from "./types/operations";
 import { v4 as uuidv4 } from 'uuid';
 
 
+export default function NewUrl() {
+    const [addUrl, setAddUrl] = useState(true);
+    const [longUrl, setlongUrl] = useState("");
+  
+    const [AddUrlMutation] = useAddUrlMutation({
 
+    });
 
-const ADD_URL = gql`
-  mutation addURL($url: AddURLInput!) {
-    addURL(input: [$url] ) {
-      uRL{
-        long_url
-      }
-    }
-  }
-`;
+    const AddUrl = () => {
+        const short_url = uuidv4();
 
-
-
-
-function NewUrl() {
-  const [long_url, setLongUrl] = React.useState("");
-  const [addURL, { loading, error }] = useMutation(ADD_URL);
-
-  function handleCreatePost(event) {
-    event.preventDefault();
-    let short_url = uuidv4();
-    addURL({ variables: { long_url, short_url } });
-  }
-
-  return (
-    <div>
-      <h1>URL Shortener!!!!</h1>
-      <form onSubmit={handleCreatePost}>
-        <input onChange={(event) => setLongUrl(event.target.value)} />
-        <button disabled={loading} type="submit">
-          Shorten Me!
-        </button>
-        {error && <p>{error.message}</p>}
-      </form>
-    </div>
-  );
+        setAddUrl(false)
+        const url = {
+          short_url: short_url,
+          long_url: longUrl
+        };
+        AddUrlMutation({ variables : { url : url}})
+      };
+      
+    const sendUrl = (
+      <Modal
+      onClose={()=> setAddUrl(false)}
+      onOpen={()=> setAddUrl(true)}
+      open={ addUrl }
+      >
+        <Modal.Header>Shorten the URL</Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            <Form>
+              <Form.Field>
+                <label>longUrl</label>
+                <input
+                  placeholder="URL"
+                  onChange={(e) => setlongUrl(e.target.value)}
+                />
+              </Form.Field>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            content="Shorten"
+            labelPosition="right"
+            icon="checkmark"
+            onClick={AddUrl}
+            positive
+          />
+        </Modal.Actions>
+      </Modal>
+    );
+  
+    return (
+        <Container>
+            <div>
+                {sendUrl}
+                
+            </div>
+        </Container>
+    )
 }
-
-
-
-
-export default NewUrl;

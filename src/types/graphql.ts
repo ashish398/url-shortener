@@ -34,6 +34,84 @@ export type Scalars = {
 
 
 
+export type UrlOrder = {
+  asc?: Maybe<UrlOrderable>;
+  desc?: Maybe<UrlOrderable>;
+  then?: Maybe<UrlOrder>;
+};
+
+export type UrlPatch = {
+  short_url?: Maybe<Scalars['String']>;
+  long_url?: Maybe<Scalars['String']>;
+};
+
+export type GenerateMutationParams = {
+  add?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<Scalars['Boolean']>;
+  delete?: Maybe<Scalars['Boolean']>;
+};
+
+export type ContainsFilter = {
+  point?: Maybe<PointRef>;
+  polygon?: Maybe<PolygonRef>;
+};
+
+export type IntFilter = {
+  eq?: Maybe<Scalars['Int']>;
+  le?: Maybe<Scalars['Int']>;
+  lt?: Maybe<Scalars['Int']>;
+  ge?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  between?: Maybe<IntRange>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getURL?: Maybe<Url>;
+  queryURL?: Maybe<Array<Maybe<Url>>>;
+  aggregateURL?: Maybe<UrlAggregateResult>;
+};
+
+
+export type QueryGetUrlArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryQueryUrlArgs = {
+  filter?: Maybe<UrlFilter>;
+  order?: Maybe<UrlOrder>;
+  first?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAggregateUrlArgs = {
+  filter?: Maybe<UrlFilter>;
+};
+
+export type StringRange = {
+  min: Scalars['String'];
+  max: Scalars['String'];
+};
+
+export type IntersectsFilter = {
+  polygon?: Maybe<PolygonRef>;
+  multiPolygon?: Maybe<MultiPolygonRef>;
+};
+
+export type GenerateQueryParams = {
+  get?: Maybe<Scalars['Boolean']>;
+  query?: Maybe<Scalars['Boolean']>;
+  password?: Maybe<Scalars['Boolean']>;
+  aggregate?: Maybe<Scalars['Boolean']>;
+};
+
+export type StringTermFilter = {
+  allofterms?: Maybe<Scalars['String']>;
+  anyofterms?: Maybe<Scalars['String']>;
+};
+
 export type StringHashFilter = {
   eq?: Maybe<Scalars['String']>;
   in?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -62,22 +140,14 @@ export type UrlAggregateResult = {
   long_urlMax?: Maybe<Scalars['String']>;
 };
 
-export type IntersectsFilter = {
-  polygon?: Maybe<PolygonRef>;
-  multiPolygon?: Maybe<MultiPolygonRef>;
+export type WithinFilter = {
+  polygon: PolygonRef;
 };
 
-export type GenerateQueryParams = {
-  get?: Maybe<Scalars['Boolean']>;
-  query?: Maybe<Scalars['Boolean']>;
-  password?: Maybe<Scalars['Boolean']>;
-  aggregate?: Maybe<Scalars['Boolean']>;
-};
-
-export type StringTermFilter = {
-  allofterms?: Maybe<Scalars['String']>;
-  anyofterms?: Maybe<Scalars['String']>;
-};
+export enum UrlOrderable {
+  ShortUrl = 'short_url',
+  LongUrl = 'long_url'
+}
 
 export type CustomHttp = {
   url: Scalars['String'];
@@ -90,15 +160,6 @@ export type CustomHttp = {
   introspectionHeaders?: Maybe<Array<Scalars['String']>>;
   skipIntrospection?: Maybe<Scalars['Boolean']>;
 };
-
-export type WithinFilter = {
-  polygon: PolygonRef;
-};
-
-export enum UrlOrderable {
-  ShortUrl = 'short_url',
-  LongUrl = 'long_url'
-}
 
 export type Int64Filter = {
   eq?: Maybe<Scalars['Int64']>;
@@ -124,14 +185,6 @@ export type DeleteUrlPayloadURlArgs = {
   offset?: Maybe<Scalars['Int']>;
 };
 
-export enum HttpMethod {
-  Get = 'GET',
-  Post = 'POST',
-  Put = 'PUT',
-  Patch = 'PATCH',
-  Delete = 'DELETE'
-}
-
 export type PointGeoFilter = {
   near?: Maybe<NearFilter>;
   within?: Maybe<WithinFilter>;
@@ -149,6 +202,25 @@ export type UpdateUrlPayloadURlArgs = {
   order?: Maybe<UrlOrder>;
   first?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+export enum HttpMethod {
+  Get = 'GET',
+  Post = 'POST',
+  Put = 'PUT',
+  Patch = 'PATCH',
+  Delete = 'DELETE'
+}
+
+
+export type IntRange = {
+  min: Scalars['Int'];
+  max: Scalars['Int'];
+};
+
+export type PointRef = {
+  longitude: Scalars['Float'];
+  latitude: Scalars['Float'];
 };
 
 export type NearFilter = {
@@ -190,18 +262,6 @@ export type Url = {
   long_url: Scalars['String'];
 };
 
-
-export type IntRange = {
-  min: Scalars['Int'];
-  max: Scalars['Int'];
-};
-
-export type PointRef = {
-  longitude: Scalars['Float'];
-  latitude: Scalars['Float'];
-};
-
-
 export type DateTimeFilter = {
   eq?: Maybe<Scalars['DateTime']>;
   le?: Maybe<Scalars['DateTime']>;
@@ -209,6 +269,23 @@ export type DateTimeFilter = {
   ge?: Maybe<Scalars['DateTime']>;
   gt?: Maybe<Scalars['DateTime']>;
   between?: Maybe<DateTimeRange>;
+};
+
+
+export type FloatRange = {
+  min: Scalars['Float'];
+  max: Scalars['Float'];
+};
+
+export enum Mode {
+  Batch = 'BATCH',
+  Single = 'SINGLE'
+}
+
+export type Point = {
+  __typename?: 'Point';
+  longitude: Scalars['Float'];
+  latitude: Scalars['Float'];
 };
 
 export type FloatFilter = {
@@ -228,20 +305,16 @@ export type UrlFilter = {
   not?: Maybe<UrlFilter>;
 };
 
-export type FloatRange = {
-  min: Scalars['Float'];
-  max: Scalars['Float'];
+export type AuthRule = {
+  and?: Maybe<Array<Maybe<AuthRule>>>;
+  or?: Maybe<Array<Maybe<AuthRule>>>;
+  not?: Maybe<AuthRule>;
+  rule?: Maybe<Scalars['String']>;
 };
 
-export enum Mode {
-  Batch = 'BATCH',
-  Single = 'SINGLE'
-}
-
-export type Point = {
-  __typename?: 'Point';
-  longitude: Scalars['Float'];
-  latitude: Scalars['Float'];
+export type PointList = {
+  __typename?: 'PointList';
+  points: Array<Point>;
 };
 
 export type StringExactFilter = {
@@ -265,29 +338,12 @@ export type UpdateUrlInput = {
   remove?: Maybe<UrlPatch>;
 };
 
-export type AuthRule = {
-  and?: Maybe<Array<Maybe<AuthRule>>>;
-  or?: Maybe<Array<Maybe<AuthRule>>>;
-  not?: Maybe<AuthRule>;
-  rule?: Maybe<Scalars['String']>;
-};
-
-export type PointList = {
-  __typename?: 'PointList';
-  points: Array<Point>;
-};
-
-export type PointListRef = {
-  points: Array<PointRef>;
-};
-
 export type PolygonRef = {
   coordinates: Array<PointListRef>;
 };
 
-export type Int64Range = {
-  min: Scalars['Int64'];
-  max: Scalars['Int64'];
+export type PointListRef = {
+  points: Array<PointRef>;
 };
 
 export enum DgraphIndex {
@@ -321,9 +377,9 @@ export type UrlRef = {
   long_url?: Maybe<Scalars['String']>;
 };
 
-export type StringFullTextFilter = {
-  alloftext?: Maybe<Scalars['String']>;
-  anyoftext?: Maybe<Scalars['String']>;
+export type Int64Range = {
+  min: Scalars['Int64'];
+  max: Scalars['Int64'];
 };
 
 export type Polygon = {
@@ -333,6 +389,11 @@ export type Polygon = {
 
 export type MultiPolygonRef = {
   polygons: Array<PolygonRef>;
+};
+
+export type StringFullTextFilter = {
+  alloftext?: Maybe<Scalars['String']>;
+  anyoftext?: Maybe<Scalars['String']>;
 };
 
 export type DateTimeRange = {
@@ -348,64 +409,3 @@ export enum UrlHasFilter {
   ShortUrl = 'short_url',
   LongUrl = 'long_url'
 }
-
-export type GenerateMutationParams = {
-  add?: Maybe<Scalars['Boolean']>;
-  update?: Maybe<Scalars['Boolean']>;
-  delete?: Maybe<Scalars['Boolean']>;
-};
-
-export type UrlOrder = {
-  asc?: Maybe<UrlOrderable>;
-  desc?: Maybe<UrlOrderable>;
-  then?: Maybe<UrlOrder>;
-};
-
-export type UrlPatch = {
-  short_url?: Maybe<Scalars['String']>;
-  long_url?: Maybe<Scalars['String']>;
-};
-
-export type StringRange = {
-  min: Scalars['String'];
-  max: Scalars['String'];
-};
-
-export type ContainsFilter = {
-  point?: Maybe<PointRef>;
-  polygon?: Maybe<PolygonRef>;
-};
-
-export type IntFilter = {
-  eq?: Maybe<Scalars['Int']>;
-  le?: Maybe<Scalars['Int']>;
-  lt?: Maybe<Scalars['Int']>;
-  ge?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  between?: Maybe<IntRange>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  getURL?: Maybe<Url>;
-  queryURL?: Maybe<Array<Maybe<Url>>>;
-  aggregateURL?: Maybe<UrlAggregateResult>;
-};
-
-
-export type QueryGetUrlArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryQueryUrlArgs = {
-  filter?: Maybe<UrlFilter>;
-  order?: Maybe<UrlOrder>;
-  first?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryAggregateUrlArgs = {
-  filter?: Maybe<UrlFilter>;
-};

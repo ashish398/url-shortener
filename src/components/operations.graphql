@@ -7,3 +7,13 @@ query allURLs{
             
 }
 }
+
+mutation addURL($url: AddURLInput!) {
+  addURL(input: [$url]) {
+    uRL {
+        id
+        short_url
+        long_url
+    }
+  }
+}
