@@ -1,0 +1,9 @@
+query allURLs{
+
+    queryURL{
+        id
+        long_url
+        short_url
+            
+}
+}
