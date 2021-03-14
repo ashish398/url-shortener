@@ -8,6 +8,13 @@ query allURLs{
 }
 }
 
+query getURL($id: ID!) {
+  getURL(id: $id) {
+    long_url
+    }}
+
+
+
 mutation addURL($url: AddURLInput!) {
   addURL(input: [$url]) {
     uRL {

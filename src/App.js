@@ -1,7 +1,8 @@
 import React from 'react' ;
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import home from './components/NewUrl'
+import home from './components/home'
+import fetch from './components/fetch'
 
 
 const client = new ApolloClient({
@@ -16,6 +17,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" component={home} />
+            <Route exact path="/:id" component={fetch} />
           </Switch>
         </Router>
       </div>

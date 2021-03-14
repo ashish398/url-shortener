@@ -14,6 +14,19 @@ export type AllUrLsQuery = (
   )>>> }
 );
 
+export type GetUrlQueryVariables = Types.Exact<{
+  id: Types.Scalars['ID'];
+}>;
+
+
+export type GetUrlQuery = (
+  { __typename?: 'Query' }
+  & { getURL?: Types.Maybe<(
+    { __typename?: 'URL' }
+    & Pick<Types.Url, 'long_url'>
+  )> }
+);
+
 export type AddUrlMutationVariables = Types.Exact<{
   url: Types.AddUrlInput;
 }>;
@@ -67,6 +80,41 @@ export function useAllUrLsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Al
 export type AllUrLsQueryHookResult = ReturnType<typeof useAllUrLsQuery>;
 export type AllUrLsLazyQueryHookResult = ReturnType<typeof useAllUrLsLazyQuery>;
 export type AllUrLsQueryResult = Apollo.QueryResult<AllUrLsQuery, AllUrLsQueryVariables>;
+export const GetUrlDocument = gql`
+    query getURL($id: ID!) {
+  getURL(id: $id) {
+    long_url
+  }
+}
+    `;
+
+/**
+ * __useGetUrlQuery__
+ *
+ * To run a query within a React component, call `useGetUrlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUrlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUrlQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUrlQuery(baseOptions: Apollo.QueryHookOptions<GetUrlQuery, GetUrlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUrlQuery, GetUrlQueryVariables>(GetUrlDocument, options);
+      }
+export function useGetUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUrlQuery, GetUrlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUrlQuery, GetUrlQueryVariables>(GetUrlDocument, options);
+        }
+export type GetUrlQueryHookResult = ReturnType<typeof useGetUrlQuery>;
+export type GetUrlLazyQueryHookResult = ReturnType<typeof useGetUrlLazyQuery>;
+export type GetUrlQueryResult = Apollo.QueryResult<GetUrlQuery, GetUrlQueryVariables>;
 export const AddUrlDocument = gql`
     mutation addURL($url: AddURLInput!) {
   addURL(input: [$url]) {
@@ -106,7 +154,8 @@ export type AddUrlMutationResult = Apollo.MutationResult<AddUrlMutation>;
 export type AddUrlMutationOptions = Apollo.BaseMutationOptions<AddUrlMutation, AddUrlMutationVariables>;
 export const namedOperations = {
   Query: {
-    allURLs: 'allURLs'
+    allURLs: 'allURLs',
+    getURL: 'getURL'
   },
   Mutation: {
     addURL: 'addURL'

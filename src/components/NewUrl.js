@@ -34,14 +34,14 @@ export default function NewUrl() {
       onOpen={()=> setAddUrl(true)}
       open={ addUrl }
       >
-        <Modal.Header>Shorten the URL</Modal.Header>
+        <Modal.Header><h3>Shorten the URL</h3></Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Form>
               <Form.Field>
-                <label>longUrl</label>
+                <label>Long Url</label>
                 <input
-                  placeholder="URL"
+                  placeholder="Eg: http://www.google.com"
                   onChange={(e) => setlongUrl(e.target.value)}
                 />
               </Form.Field>
