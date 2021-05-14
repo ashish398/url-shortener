@@ -13,7 +13,7 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div className = {styles.fill}>
+      <div className = {`${styles.fill} ${styles["fill-window"]}`}>
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { useAddUrlMutation } from "./types/operations";
+import { useAddUrlMutation, namedOperations } from "./types/operations";
 import { v4 as uuidv4 } from "uuid";
+import styles from "./NewUrl.module.css";
 
 const NewUrl = () => {
   const [longUrl, setLongUrl] = useState("");
 
-  const [AddUrlMutation] = useAddUrlMutation({});
+  const [addUrlMutation] = useAddUrlMutation({
+    refetchQueries: [namedOperations.Query.allURLs],
+  });
 
   const AddUrl = () => {
     const shortUrl = uuidv4();
@@ -13,8 +16,7 @@ const NewUrl = () => {
       short_url: shortUrl,
       long_url: longUrl,
     };
-    console.log(shortUrl)
-    AddUrlMutation({ variables: { url: url } });
+    addUrlMutation({ variables: { url: url } });
   };
 
   const inputChangeHandler = (event) => {
@@ -28,17 +30,18 @@ const NewUrl = () => {
 
   return (
     <>
-      <h3>Enter New URL</h3>
+      <h3 className = {styles.class}>Go On, enter a really long URL</h3>
       <form onSubmit={submitHandler}>
-        <label htmlFor='longUrl'>Long URL</label>
         <input
           id='longUrl'
-          type='url'
+          type='text'
           onChange={inputChangeHandler}
           value={longUrl}
           placeholder='Eg: https://dgraph.io/'
         />
-        <button type='submit'>Shorten Me</button>
+        <div>
+          <button type='submit'>Hit me! I'll Shorten it.</button>
+        </div>
       </form>
     </>
   );

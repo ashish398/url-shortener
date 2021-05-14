@@ -1,8 +1,8 @@
-import React from "react";
 import { useAllUrLsQuery } from "./types/operations";
-
+import UrlTable from "./UrlTable";
 const UrlList = () => {
   const { data, loading, error } = useAllUrLsQuery();
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -15,32 +15,10 @@ const UrlList = () => {
       </div>
     );
   }
-
   const items = data?.queryURL;
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Long URL</th>
-            <th>Shortened URL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item,index) => (
-            
-            <tr key={item.id}>
-              <td>{index+1}</td>
-              <td>{item.long_url}</td>
-              <td>
-                <a href={`${item.long_url}`}> {item.id} </a>
-              </td>
-              <td />
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <UrlTable items={items} />
     </>
   );
 };
